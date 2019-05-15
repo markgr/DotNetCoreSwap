@@ -1,47 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using DotNetCoreSwap.Models;
+using DotNetCoreSwap.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace DotNetCoreSwap.Extensions
 {
-    public class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthenticationOptions>
+    public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        private readonly IUserService _userService;
+
+        public BasicAuthenticationHandler(
+            IOptionsMonitor<AuthenticationSchemeOptions> options,
+            ILoggerFactory logger,
+            UrlEncoder encoder,
+            ISystemClock clock,
+            IUserService userService)
+            : base(options, logger, encoder, clock)
         {
-            var authHeader = (string)this.Request.Headers["Authorization"];
+            _userService = userService;
+        }
 
-            if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("basic", StringComparison.OrdinalIgnoreCase))
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            if (!Request.Headers.ContainsKey("Authorization"))
+                return AuthenticateResult.Fail("Missing Authorization Header");
+
+            User user = null;
+            try
             {
-                //Extract credentials
-                string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-                Encoding encoding = Encoding.GetEncoding("iso-8859-1");
-                string usernamePassword = encoding.GetString(Convert.FromBase64String(encodedUsernamePassword));
-
-                int seperatorIndex = usernamePassword.IndexOf(':');
-
-                var username = usernamePassword.Substring(0, seperatorIndex);
-                var password = usernamePassword.Substring(seperatorIndex + 1);
-
-                //you also can use this.Context.Authentication here
-                if (username == "test" && password == "test")
-                {
-                    var user = new GenericPrincipal(new GenericIdentity("User"), null);
-                    var ticket = new AuthenticationTicket(user, new AuthenticationProperties(), Options.AuthenticationScheme);
-                    return Task.FromResult(AuthenticateResult.Success(ticket));
-                }
-                else
-                {
-                    return Task.FromResult(AuthenticateResult.Fail("No valid user."));
-                }
+                var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+                var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+                var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
+                var username = credentials[0];
+                var password = credentials[1];
+                user = await _userService.Authenticate(username, password);
+            }
+            catch
+            {
+                return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            this.Response.Headers["WWW-Authenticate"] = "Basic realm=\"dotnetcoreswap.cloud\"";
-            return Task.FromResult(AuthenticateResult.Fail("No credentials."));
+            if (user == null)
+                return AuthenticateResult.Fail("Invalid Username or Password");
+
+            var claims = new[] {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+            };
+            var identity = new ClaimsIdentity(claims, Scheme.Name);
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+            return AuthenticateResult.Success(ticket);
         }
     }
 }
