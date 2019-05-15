@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreSwap.Models;
+using System.Text;
 
 namespace DotNetCoreSwap.Services
 {
@@ -27,10 +28,15 @@ namespace DotNetCoreSwap.Services
             // return null if user not found
             if (user == null)
                 return null;
+            
+			var bytes = Encoding.UTF8.GetBytes(string.Format("{0}:{1}", user.Username, user.Password));
+			var base64 = Convert.ToBase64String(bytes);
+			user.Base64 = base64;
 
-            // authentication successful so return user details without password
-            user.Password = null;
-            return user;
+			// authentication successful so return user details without password
+			user.Password = null;
+
+			return user;
         }
 
         public async Task<IEnumerable<User>> GetAll()
