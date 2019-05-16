@@ -35,7 +35,7 @@ namespace DotNetCoreSwap.Controllers
 			return Ok(new JsonResult(user.Base64));
 		}
 
-		[HttpGet]
+		[HttpGet("getallusers")]
 		[SwaggerResponse(200, Type = typeof(List<User>))]
 		[SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
 		[SwaggerResponse(401, Description = "Not Auth", Type = typeof(Exception))]

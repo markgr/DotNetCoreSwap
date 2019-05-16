@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreSwap.Extensions;
+using DotNetCoreSwap.Interfaces;
 using DotNetCoreSwap.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -78,7 +79,7 @@ namespace DotNetCoreSwap
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-
+            services.AddSingleton<ISort, BubbleSort>();
 		}		
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
