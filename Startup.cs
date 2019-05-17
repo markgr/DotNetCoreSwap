@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Converters;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 
 
@@ -35,8 +36,6 @@ namespace DotNetCoreSwap
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-			string securityName = "Basic";
-
 			services.AddMvc(options => 
 			{
 				// Only support JSON by default.
@@ -59,19 +58,7 @@ namespace DotNetCoreSwap
 			.AddControllersAsServices()
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-			services.AddSwaggerGen( c=> {
-				c.SwaggerDoc("v1.0", new Info { Title = "DotNetCoreSwap API", Version = "v1.0" });
-				c.AddSecurityDefinition(securityName, new ApiKeyScheme()
-				{
-					Description = "Enter: Basic {token}",
-					Name = "Authorization",
-					In = "header"
-				});
-				c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-				{
-					[securityName] = new string[0]
-				});
-			});
+			services.AddSwaggerGen(Swagger.ConfigureSwagger);
 
             // configure basic authentication 
             services.AddAuthentication("BasicAuthentication")
@@ -80,7 +67,9 @@ namespace DotNetCoreSwap
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton<ISort, BubbleSort>();
-		}		
+            services.AddSingleton<ISort, SelectionSort>();
+
+        }		
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

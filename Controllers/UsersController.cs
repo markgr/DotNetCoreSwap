@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace DotNetCoreSwap.Controllers
 {
@@ -25,7 +26,7 @@ namespace DotNetCoreSwap.Controllers
 
 		[AllowAnonymous]
 		[HttpPost("authenticate")]
-		public async  Task<IActionResult> Authenticate([FromBody]User userDetails)
+		public async  Task<IActionResult> Authenticate([FromBody]UserRequest userDetails)
 		{
 			var user = await _userService.Authenticate(userDetails.Username, userDetails.Password);
 
@@ -36,11 +37,12 @@ namespace DotNetCoreSwap.Controllers
 		}
 
 		[HttpGet("getallusers")]
-		[SwaggerResponse(200, Type = typeof(List<User>))]
+		[SwaggerResponse(200, Type = typeof(List<UserResponse>))]
 		[SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
 		[SwaggerResponse(401, Description = "Not Auth", Type = typeof(Exception))]
 		[SwaggerResponse(403, Description = "Not Au", Type = typeof(Exception))]
-		public async Task<IActionResult> GetAll()
+
+        public async Task<IActionResult> GetAll()
 		{
 			var users = await _userService.GetAll();
 			return Ok(users);

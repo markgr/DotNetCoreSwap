@@ -10,12 +10,12 @@ namespace DotNetCoreSwap.Services
     /// <summary>
     /// Class for handling Bubblesort of array of ints
     /// </summary>
-    public class BubbleSort : AbstractSort, ISort
+    public class SelectionSort : AbstractSort, ISort
     {
         /// <summary>
         /// C'tor
         /// </summary>
-        public BubbleSort()
+        public SelectionSort()
         {
 
         }
@@ -41,7 +41,7 @@ namespace DotNetCoreSwap.Services
         /// <param name="data">Input data</param>
         protected IntSortResults IntSortAsync(int[] data)
         {
-            int i, j;
+            int i;
             int N = data.Length;
 
             var output = new IntSortResults ();
@@ -51,15 +51,12 @@ namespace DotNetCoreSwap.Services
             Stopwatch watch = new Stopwatch();
             watch.Reset();
             watch.Start();
-
-
-            for (j = N - 1; j > 0; j--)
+                                  
+            for (i = 0; i < N - 1; i++)
             {
-                for (i = 0; i < j; i++)
-                {
-                    if (data[i] > data[i + 1])
-                        Exchange(data, i, i + 1);
-                }
+                int k = IntArrayMin(data, i);
+                if (i != k)
+                    Exchange(data, i, k);
             }
 
             // Now stop
@@ -70,6 +67,21 @@ namespace DotNetCoreSwap.Services
 
             // Return the sorted array
             return (output);
+        }
+
+        /// <summary>
+        /// Find the smallest item in the remainder of the array from start
+        /// </summary>
+        /// <returns>The position of the smallest number</returns>
+        /// <param name="data">Initial data</param>
+        /// <param name="start">Start position</param>
+        protected int IntArrayMin(int[] data, int start)
+        {
+            int minPos = start;
+            for (int pos = start + 1; pos < data.Length; pos++)
+                if (data[pos] < data[minPos])
+                    minPos = pos;
+            return minPos;
         }
     }
 }

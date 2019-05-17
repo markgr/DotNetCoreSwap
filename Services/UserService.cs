@@ -9,19 +9,19 @@ namespace DotNetCoreSwap.Services
 {
     public interface IUserService
     {
-        Task<User> Authenticate(string username, string password);
-        Task<IEnumerable<User>> GetAll();
+        Task<UserResponse> Authenticate(string username, string password);
+        Task<IEnumerable<UserResponse>> GetAll();
     }
 
     public class UserService : IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
+        private List<UserResponse> _users = new List<UserResponse>
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+            new UserResponse { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
         };
 
-        public async Task<User> Authenticate(string username, string password)
+        public async Task<UserResponse> Authenticate(string username, string password)
         {
             var user = await Task.Run(() => _users.SingleOrDefault(x => x.Username == username && x.Password == password));
 
@@ -39,7 +39,7 @@ namespace DotNetCoreSwap.Services
 			return user;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserResponse>> GetAll()
         {
             // return users without passwords
             return await Task.Run(() => _users.Select(x => {
