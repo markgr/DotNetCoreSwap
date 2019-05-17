@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetCoreSwap.Extensions;
 using DotNetCoreSwap.Interfaces;
 using DotNetCoreSwap.Models;
 using DotNetCoreSwap.Services;
@@ -16,19 +14,31 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace DotNetCoreSwap.Controllers
 {
+    /// <summary>
+    /// Controller for the swap API
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     public class SwapController : Controller
     {
         IServiceProvider _serviceProvider;
 
+        /// <summary>
+        /// C'Tor
+        /// </summary>
+        /// <param name="serviceProvider">Service provider.</param>
         public SwapController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
+        /// <summary>
+        /// Bubble Sort Random API.
+        /// </summary>
+        /// <returns>Sorted array</returns>
+        /// <param name="numberItems">Number items to sort</param>
         // GET: api/values
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet("bubbleSortRandom")]
         [SwaggerResponse(200, Type = typeof(IntSortResults))]
         [SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
@@ -39,29 +49,34 @@ namespace DotNetCoreSwap.Controllers
         {
             int items = -1;
             if (!Int32.TryParse(numberItems, out items))
-                return BadRequest("Error psring numberOfItems");
+                return BadRequest("Error parsing numberOfItems");
 
             Random r = new Random();
 
             var services = _serviceProvider.GetServices<ISort>();
-            var bubbleSort = services.FirstOrDefault(o => o.GetType() == typeof(BubbleSort));
+            var bubbleSort = services.FirstOrDefault(o => o.GetType() == typeof(InsertionSort));
             var output = await bubbleSort.IntSort(Enumerable.Range(0, items).Select(x => r.Next(1000)).ToArray());
             return Ok(output);
         }
 
+        /// <summary>
+        /// Selection Sort Random API.
+        /// </summary>
+        /// <returns>Sorted array</returns>
+        /// <param name="numberItems">Number items to sort</param>
         // GET: api/values
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet("selectionSortRandom")]
         [SwaggerResponse(200, Type = typeof(IntSortResults))]
         [SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
         [SwaggerResponse(401, Description = "Not Auth", Type = typeof(Exception))]
         [SwaggerResponse(403, Description = "Not Au", Type = typeof(Exception))]
-        [SwaggerOperation(description: "This will return a random array of ints - sorted using a bubble sort")]
+        [SwaggerOperation(description: "This will return a random array of ints - sorted using a selection sort")]
         public async Task<IActionResult> SelectionSortRandom([Required] string numberItems)
         {
             int items = -1;
             if (!Int32.TryParse(numberItems, out items))
-                return BadRequest("Error psring numberOfItems");
+                return BadRequest("Error parsing numberOfItems");
 
             Random r = new Random();
 
@@ -71,22 +86,57 @@ namespace DotNetCoreSwap.Controllers
             return Ok(output);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// Insertion Sort Random API.
+        /// </summary>
+        /// <returns>Sorted array</returns>
+        /// <param name="numberItems">Number items to sort</param>
+        //[AllowAnonymous]
+        [HttpGet("insertionSortRandom")]
+        [SwaggerResponse(200, Type = typeof(IntSortResults))]
+        [SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
+        [SwaggerResponse(401, Description = "Not Auth", Type = typeof(Exception))]
+        [SwaggerResponse(403, Description = "Not Au", Type = typeof(Exception))]
+        [SwaggerOperation(description: "This will return a random array of ints - sorted using a insertion sort")]
+        public async Task<IActionResult> InsertionSortRandom([Required] string numberItems)
         {
+            int items = -1;
+            if (!Int32.TryParse(numberItems, out items))
+                return BadRequest("Error parsing numberOfItems");
+
+            Random r = new Random();
+
+            var services = _serviceProvider.GetServices<ISort>();
+            var selectionSort = services.FirstOrDefault(o => o.GetType() == typeof(InsertionSort));
+            var output = await selectionSort.IntSort(Enumerable.Range(0, items).Select(x => r.Next(1000)).ToArray());
+            return Ok(output);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// Quick Sort Random API.
+        /// </summary>
+        /// <returns>Sorted array</returns>
+        /// <param name="numberItems">Number items to sort</param>
+        //[AllowAnonymous]
+        [HttpGet("quickSortRandom")]
+        [SwaggerResponse(200, Type = typeof(IntSortResults))]
+        [SwaggerResponse(400, Description = "Invalid", Type = typeof(Exception))]
+        [SwaggerResponse(401, Description = "Not Auth", Type = typeof(Exception))]
+        [SwaggerResponse(403, Description = "Not Au", Type = typeof(Exception))]
+        [SwaggerOperation(description: "This will return a random array of ints - sorted using a qucik sort")]
+        public async Task<IActionResult> QuickSortRandom([Required] string numberItems)
         {
+            int items = -1;
+            if (!Int32.TryParse(numberItems, out items))
+                return BadRequest("Error parsing numberOfItems");
+
+            Random r = new Random();
+
+            var services = _serviceProvider.GetServices<ISort>();
+            var selectionSort = services.FirstOrDefault(o => o.GetType() == typeof(QuickSort));
+            var output = await selectionSort.IntSort(Enumerable.Range(0, items).Select(x => r.Next(1000)).ToArray());
+            return Ok(output);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

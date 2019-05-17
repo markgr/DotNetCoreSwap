@@ -6,15 +6,27 @@ using System.Linq;
 
 namespace DotNetCoreSwap.Helpers
 {
+    /// <summary>
+    /// Splits the examples for the different models
+    /// </summary>
     internal sealed class SwaggerExampleFilter : IDocumentFilter
     {
         private readonly IDictionary<string, object> _values;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:DotNetCoreSwap.Helpers.SwaggerExampleFilter"/> class.
+        /// </summary>
+        /// <param name="values">Values.</param>
         public SwaggerExampleFilter(IDictionary<string, object> values)
         {
             _values = values;
         }
 
+        /// <summary>
+        /// Apply the specified examples into the swaggerDoc using the document context.
+        /// </summary>
+        /// <param name="swaggerDoc">Swagger document.</param>
+        /// <param name="context">Context.</param>
         public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
         {
             foreach (var value in _values)

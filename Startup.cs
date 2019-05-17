@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DotNetCoreSwap.Extensions;
+﻿using DotNetCoreSwap.Extensions;
 using DotNetCoreSwap.Interfaces;
 using DotNetCoreSwap.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Converters;
-using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.Swagger;
 
 
 namespace DotNetCoreSwap
 {
+    /// <summary>
+    /// Self hosted webapi
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:DotNetCoreSwap.Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">Configuration.</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,9 +31,13 @@ namespace DotNetCoreSwap
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">Services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add MVC options
 			services.AddMvc(options => 
 			{
 				// Only support JSON by default.
@@ -58,6 +60,7 @@ namespace DotNetCoreSwap
 			.AddControllersAsServices()
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // Add the swagger configuration
 			services.AddSwaggerGen(Swagger.ConfigureSwagger);
 
             // configure basic authentication 
@@ -66,13 +69,18 @@ namespace DotNetCoreSwap
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-            services.AddSingleton<ISort, BubbleSort>();
+            services.AddSingleton<ISort, InsertionSort>();
             services.AddSingleton<ISort, SelectionSort>();
+            services.AddSingleton<ISort, BubbleSort>();
+            services.AddSingleton<ISort, QuickSort>();
+        }
 
-        }		
-
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">App.</param>
+        /// <param name="env">Env.</param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

@@ -8,20 +8,31 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DotNetCoreSwap.Helpers
 {
+    /// <summary>
+    /// Documentation filter for swagger
+    /// </summary>
     internal sealed class DocumentationFilter : IDocumentFilter
     {
+        /// <summary>
+        /// Add markdown documents to swagger
+        /// </summary>
+        /// <param name="swaggerDoc">Swagger document.</param>
+        /// <param name="context">Context.</param>
         public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
         {
-            //if (swaggerDoc.Info.Title.Contains("Consumer"))
-            //{
+
             swaggerDoc.Info.Description = GetMarkdown("DotNetCoreSwap.Helpers.Resources.explanation.md");
-            //}
 
             swaggerDoc.Paths = swaggerDoc.Paths
                 .OrderBy(e => e.Key, new PathComparer())
                 .ToDictionary(e => e.Key, e => e.Value);
         }
 
+        /// <summary>
+        /// Gets the markdown out of resources
+        /// </summary>
+        /// <returns>The markdown.</returns>
+        /// <param name="resourcePath">Resource path.</param>
         public string GetMarkdown(string resourcePath)
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath))
@@ -31,6 +42,9 @@ namespace DotNetCoreSwap.Helpers
             }
         }
 
+        /// <summary>
+        /// ICompare function
+        /// </summary>
         private class PathComparer : IComparer<string>
         {
             public int Compare(string x, string y)

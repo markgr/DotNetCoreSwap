@@ -18,7 +18,9 @@ namespace DotNetCoreSwap.Services
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<UserResponse> _users = new List<UserResponse>
         {
-            new UserResponse { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+            new UserResponse { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" },
+            new UserResponse { Id = 2, FirstName = "Mark", LastName = "Greenwood", Username = "markgr", Password = "12345" },
+            new UserResponse { Id = 3, FirstName = "Han", LastName = "Sun", Username = "han.s", Password = "abcdef" }
         };
 
         public async Task<UserResponse> Authenticate(string username, string password)

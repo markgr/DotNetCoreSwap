@@ -1,6 +1,9 @@
 ﻿using System;
 namespace DotNetCoreSwap.Models
 {
+    /// <summary>
+    /// Sorted results model.
+    /// </summary>
     public class IntSortResults
     {
         public int[] UnsortedArray { get; set; }

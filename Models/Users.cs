@@ -1,9 +1,10 @@
-﻿using System;
-using System.Runtime.Serialization;
-using Swashbuckle.AspNetCore.Filters;
+﻿using System.Runtime.Serialization;
 
 namespace DotNetCoreSwap.Models
 {
+    /// <summary>
+    /// User response model
+    /// </summary>
     [DataContract]
     public class UserResponse
     {
@@ -20,6 +21,9 @@ namespace DotNetCoreSwap.Models
         public string Base64 { set; get; }
     }
 
+    /// <summary>
+    /// User request model
+    /// </summary>
     public class UserRequest
     {
         public string Username { get; set; }

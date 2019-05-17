@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DotNetCoreSwap.Helpers
 {
+
     internal sealed class PayloadPropertyExamplesDocumentFilter : IDocumentFilter
     {
         private readonly IDictionary<(Type Schema, string PropertyName), object> _values;

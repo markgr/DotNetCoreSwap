@@ -31,4 +31,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Helpers\Resources\explanation.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Helpers\PayloadPropertyExamplesDocumentFilter.cs" />
+  </ItemGroup>
 </Project>
