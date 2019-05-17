@@ -8,6 +8,11 @@ namespace DotNetCoreSwap.Interfaces
     /// </summary>
     public interface ISort
     {
+        /// <summary>
+        /// Sort ints
+        /// </summary>
+        /// <returns>The sorted array</returns>
+        /// <param name="data">Data.</param>
         Task<IntSortResults> IntSort(int[] data);
     }
 }

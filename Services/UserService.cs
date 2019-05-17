@@ -7,12 +7,29 @@ using System.Text;
 
 namespace DotNetCoreSwap.Services
 {
+    /// <summary>
+    /// User service.
+    /// </summary>
     public interface IUserService
     {
+        /// <summary>
+        /// Authenticate the specified username and password.
+        /// </summary>
+        /// <returns>The authenticate.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
         Task<UserResponse> Authenticate(string username, string password);
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>The all.</returns>
         Task<IEnumerable<UserResponse>> GetAll();
     }
 
+    /// <summary>
+    /// Some fake users
+    /// </summary>
     public class UserService : IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
@@ -23,6 +40,12 @@ namespace DotNetCoreSwap.Services
             new UserResponse { Id = 3, FirstName = "Han", LastName = "Sun", Username = "han.s", Password = "abcdef" }
         };
 
+        /// <summary>
+        /// Verify we can auth
+        /// </summary>
+        /// <returns>The authenticate.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
         public async Task<UserResponse> Authenticate(string username, string password)
         {
             var user = await Task.Run(() => _users.SingleOrDefault(x => x.Username == username && x.Password == password));
@@ -41,6 +64,10 @@ namespace DotNetCoreSwap.Services
 			return user;
         }
 
+        /// <summary>
+        /// Gets all users
+        /// </summary>
+        /// <returns>The all.</returns>
         public async Task<IEnumerable<UserResponse>> GetAll()
         {
             // return users without passwords

@@ -29,6 +29,10 @@ namespace DotNetCoreSwap
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Gets the configuration.
+        /// </summary>
+        /// <value>The configuration.</value>
         public IConfiguration Configuration { get; }
 
         /// <summary>
