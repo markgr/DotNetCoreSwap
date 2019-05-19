@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreSwap", "DotNetCoreSwap.csproj", "{C2DBF3E7-87DA-4D8B-8A7C-62CA663F9CD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSwap", "..\Test\TestSwap\TestSwap.csproj", "{3D724E80-0899-4387-A5C5-7984D0C4DD91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{C2DBF3E7-87DA-4D8B-8A7C-62CA663F9CD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2DBF3E7-87DA-4D8B-8A7C-62CA663F9CD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2DBF3E7-87DA-4D8B-8A7C-62CA663F9CD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D724E80-0899-4387-A5C5-7984D0C4DD91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D724E80-0899-4387-A5C5-7984D0C4DD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D724E80-0899-4387-A5C5-7984D0C4DD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D724E80-0899-4387-A5C5-7984D0C4DD91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

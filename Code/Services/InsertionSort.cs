@@ -8,14 +8,14 @@ using DotNetCoreSwap.Models;
 namespace DotNetCoreSwap.Services
 {
     /// <summary>
-    /// Class for handling Bubblesort of array of ints
+    /// Class for handling InsertionSort of array of ints
     /// </summary>
-    public class BubbleSort : AbstractSort, ISort
+    public class InsertionSort : AbstractSort, ISort
     {
         /// <summary>
         /// C'tor
         /// </summary>
-        public BubbleSort()
+        public InsertionSort()
         {
 
         }
@@ -26,7 +26,11 @@ namespace DotNetCoreSwap.Services
         /// <returns>A refference to an instance of IntSortResults</returns>
         /// <param name="data">Input data</param>
         public async Task<IntSortResults> IntSort(int[] data)
-        {        
+        {
+            // Throw if data is null
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
             // Perform the sort in a background thread
             var results = await Task.Run(() => IntSortAsync(data));
 
@@ -53,12 +57,11 @@ namespace DotNetCoreSwap.Services
             watch.Start();
 
 
-            for (j = N - 1; j > 0; j--)
+            for (j = 1; j < N; j++)
             {
-                for (i = 0; i < j; i++)
+                for (i = j; i > 0 && data[i] < data[i - 1]; i--)
                 {
-                    if (data[i] > data[i + 1])
-                        Exchange(data, i, i + 1);
+                    Exchange(data, i, i - 1);
                 }
             }
 

@@ -1,0 +1,47 @@
+﻿<Properties StartupConfiguration="{C2DBF3E7-87DA-4D8B-8A7C-62CA663F9CD0}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Services/SelectionSort.cs">
+    <Files>
+      <File FileName="../Test/TestSwap/UnitTest1.cs" Line="76" Column="1" />
+      <File FileName="Services/BubbleSort.cs" Line="32" Column="63" />
+      <File FileName="Controllers/SwapController.cs" Line="40" Column="27" />
+      <File FileName="../Test/TestSwap/Mocks/MockServiceProvider.cs" Line="16" Column="1" />
+      <File FileName="../Test/TestSwap/TestSwap.csproj" Line="23" Column="73" />
+      <File FileName="Services/InsertionSort.cs" Line="33" Column="1" />
+      <File FileName="Services/QuickSort.cs" Line="33" Column="1" />
+      <File FileName="Services/SelectionSort.cs" Line="29" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DotNetCoreSwap" expanded="True">
+            <Node name="DotNetCoreSwap" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+                <Node name="SdkDependencies" expanded="True" />
+              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="SelectionSort.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="TestSwap" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+                <Node name="ProjectDependencies" expanded="True" />
+                <Node name="SdkDependencies" expanded="True" />
+              </Node>
+              <Node name="Mocks" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.DotNetCoreSwap PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

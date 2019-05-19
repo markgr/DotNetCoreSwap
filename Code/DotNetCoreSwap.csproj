@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\netcoreapp2.2\DotNetCoreSwap.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="4.5.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Helpers\Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Helpers\Resources\explanation.md" />
+    <None Remove="TestProject\obj\TestProject.csproj.nuget.cache" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\TestProject.dll" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.assets.cache" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.csprojAssemblyReference.cache" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.AssemblyInfoInputs.cache" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.csproj.CoreCompileInputs.cache" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.pdb" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.dll" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.csproj.FileListAbsolute.txt" />
+    <None Remove="TestProject\obj\TestProject.csproj.nuget.g.props" />
+    <None Remove="TestProject\obj\TestProject.csproj.nuget.cache" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\DotNetCoreSwap.pdb" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\DotNetCoreSwap.dll" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.csprojAssemblyReference.cache" />
+    <None Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.csproj.CopyComplete" />
+    <None Remove="TestProject\bin\Debug\netcoreapp2.2\TestProject.pdb" />
+    <None Remove="TestProject\obj\TestProject.csproj.nuget.cache" />
+    <None Remove="TestProject\obj\TestProject.csproj.nuget.g.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Helpers\Resources\explanation.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Helpers\PayloadPropertyExamplesDocumentFilter.cs" />
+    <Compile Remove="Helpers\PayloadPropertyExamplesDocumentFilter.cs" />
+    <Compile Remove="TestProject\UnitTest1.cs" />
+    <Compile Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.Program.cs" />
+    <Compile Remove="TestProject\obj\Debug\netcoreapp2.2\TestProject.AssemblyInfo.cs" />
+    <Compile Remove="TestProject\UnitTest1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="TestProject\obj\project.assets.json" />
+    <Content Remove="TestProject\bin\Debug\netcoreapp2.2\TestProject.deps.json" />
+    <Content Remove="TestProject\obj\project.assets.json" />
+    <Content Remove="TestProject\obj\project.assets.json" />
+  </ItemGroup>
+</Project>

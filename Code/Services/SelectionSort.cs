@@ -26,7 +26,11 @@ namespace DotNetCoreSwap.Services
         /// <returns>A refference to an instance of IntSortResults</returns>
         /// <param name="data">Input data</param>
         public async Task<IntSortResults> IntSort(int[] data)
-        {        
+        {
+            // Throw if data is null
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
             // Perform the sort in a background thread
             var results = await Task.Run(() => IntSortAsync(data));
 
