@@ -1,6 +1,6 @@
 # DotNetCoreSwap
 
-This is a sample project o demonstrate how to use a DotNetCore webapi project.
+This is a sample project to demonstrate how to use a DotNetCore webapi project.
 
 This project uses SWAGGER to display the API functions.
 
